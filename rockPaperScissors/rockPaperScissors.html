@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+	</title>
+	<style>
+	.cuteDiv {
+           border: 1px solid gray;
+           display: inline-block;
+           width: 20px;
+           height: 20px;
+           margin: 0% 0% 0% 0%;
+           /*border-radius: 50%;*/
+       }
+	#humanPoints{
+		font-size: 100px;
+		color: yellow;
+		margin: 1% 15% 0% 15%;
+	}
+	#computerPoints{
+		font-size: 100px;
+		color:yellow;
+		margin: 1% 5% 0% 50%;
+	}
+	.score{
+		position: absolute;
+		font-size: 60px;
+		color: white;
+	}
+
+
+	body{
+		/*background-color: blue;*/
+	}
+
+
+	#rockButton{
+		background-color: gray;
+		border: 1px solid white;
+		border-radius: 50%;
+		margin: 20% 0% 0% 20%;
+	}
+	#paperButton{
+		background-color: gray;
+		border: 1px solid white;
+		border-radius: 50%;
+		margin: 20% 0% 0% 45%;
+	}
+	#scissorsButton{
+		background-color: gray;
+		border: 1px solid white;
+		border-radius: 50%;
+		margin: 20% 0% 0% 70%;
+	}
+
+
+	.clickable{
+		background-color: #000000;
+		color: white;
+		border: 1px solid red;
+		width: 150px;
+		height: 150px;
+		margin: 0 auto;
+		position: absolute;
+	}
+	
+	</style>
+</head>
+<body>
+<div class="score" id="humanPoints"> Human: </div>
+<div class="score" id="computerPoints"> Computer: </div>
+
+
+<input id="rockButton" type="button" value="Rock" class="clickable" />
+<input id="paperButton" type="button" value="Paper" class="clickable" />
+<input id="scissorsButton" type="button" value="Scissors" class="clickable" />
+
+<!-- <input id="myRange" type="range" min="0" max="10000" /> -->
+
+<script>
+
+	var numberOfDivs = prompt("How many divs do you want?");
+   // numberOfDivs = myRange.value;
+   console.log(numberOfDivs);
+
+   var cuteLittleDiv = document.getElementsByClassName("cuteDiv");
+
+      // if(numberOfDivs < 100){
+      //    cuteLittleDiv.style.height("100px");
+      //    cuteLittleDiv.style.width("100px");
+      // }
+   // var makeCuteDivs = document.createElement('div');
+   // makeCuteDivs.className = "cuteDiv";
+
+   for(var i = 0; i < numberOfDivs; ++i ){
+         var makeCuteDivs = document.createElement('div');
+         makeCuteDivs.className = "cuteDiv";
+         document.getElementsByTagName('body')[0].appendChild(makeCuteDivs);
+   }
+
+
+
+
+     var myDivs = document.getElementsByClassName("cuteDiv");
+     console.log(myDivs);
+     // var myBody = document.getElementByTagName("body");
+     for(var i = 0; i < myDivs.length; ++i) 
+     {
+       myDivs[i].onmousemove = function(){
+       for(var i = 0; i < myDivs.length; ++i) {
+             myDivs[i].style.backgroundColor = '#'+Math.floor(Math.random()*16777215).toString(16);
+              myDivs[i].style.borderColor = '#'+Math.floor(Math.random()*16777215).toString(16);
+      }
+        console.log(i);
+        // console.log(myDivs.length);
+
+       }
+
+     }
+     // for(var x = 0; x < myBody.length; ++1){
+
+
+     // }
+	var tie;
+	var computerWins;
+	var computerPoints = 0;
+	var humanPoints = 0;
+	var compMove = Math.floor(Math.random() * 3);
+	console.log("the computer threw a " + compMove);
+	var userInput;
+
+
+	var buttons = document.getElementsByClassName("clickable");
+
+
+	//the rock button function
+	var youRock = function(){
+		console.log("Rock");
+		userInput = 0;
+		console.log(userInput);
+		checkInput();
+		
+	};
+
+	//the scissors button function
+	var youCut = function(){
+		console.log("Scissors");
+		userInput = 2;
+		console.log(userInput);
+		checkInput();
+	};
+
+	//the paper button function
+	var deadTrees = function(){
+		console.log("I am a piece of paper, hear me roar");
+		userInput = 1;
+		console.log(userInput);
+		checkInput();
+	};
+
+	// buttons[0].onclick = youRock;
+	theRock = buttons[0];
+	thePaper = buttons[1];
+	theScissors = buttons[2];
+
+
+	//Exectutes the youRock function
+	theRock.onclick = youRock;
+	//Executes the paper function
+	thePaper.onclick = deadTrees;
+	//Executes the youCut function
+	theScissors.onclick = youCut;
+
+	var addPoints = function(){
+		if(computerWins == true){
+			computerPoints ++;
+			var computerPointsString = computerPoints.toString();
+			 document.getElementById("computerPoints").innerHTML = "Computer: " + computerPointsString;
+			console.log(computerPoints);
+			// var computerPointsString = computerPoints.to_s;
+			// document.getElementById("humanPoints").appendChild(computerPointsString);
+		}
+		else if(computerWins == false){
+			humanPoints ++;
+			var humanPointsString = humanPoints.toString();
+			document.getElementById("humanPoints").innerHTML = "Human: " + humanPointsString;
+			// var computerPointsString = computerPoints.to_s;
+			// document.getElementById("humanPoints").appendChild(computerPointsString);
+		}
+
+
+	}
+
+	var checkInput = function(num){
+		if (userInput == 0 && compMove ==1){
+			alert("Computer plays paper. Computer wins.");
+			computerWins = true;
+			console.log(Boolean(computerWins));
+		}
+		if (userInput == 1 && compMove == 2){
+			alert("Computer play scissors. Computer wins.");
+			computerWins = true;
+		}
+		if (userInput == 2 && compMove == 0)
+			alert("Computer plays rock. Computer wins.");
+			computerWins = true;
+		if (userInput == 0 && compMove == 2){
+			alert("Computer plays scissors. You smashed its scissors!");
+		}
+		if (userInput == 1 && compMove == 0){
+			alert("Computer plays rock. You suffocated its rock!")
+			computerWins = false;
+		}
+		if (userInput == 2 && compMove == 1){
+			alert("Computer plays paper. You cut its paper into tiny little pieces! Ouch. ")
+			computerWins = false;
+		}
+		if (userInput == 0 && compMove ==0){
+			alert("You and the computer both played rock. You both live another day.")
+			var tie = true;
+
+		}
+		if (userInput == 1 && compMove == 1){
+			alert("You and the computer both played paper. This is awkward.")
+			var tie = true;
+		}
+		if (userInput ==2 && compMove ==2) {
+			alert("You and the computer both played scissors. Ouch.")
+			var tie = true;
+		}
+		compMove = Math.floor(Math.random() * 3);
+
+		addPoints();
+	};
+
+	
+</script>
+
+</body>
+</html>
